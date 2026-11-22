@@ -1,0 +1,28 @@
+dataset:
+  raw_directory: data/raw
+  processed_path: data/processed/measured_eis_dataset.npz
+  frequency_points: 201
+  excluded_specimens: [M15_02, M15_03]
+  historical_transfer_specimens: [Z05_03, Z10_02, Z15_04]
+
+cross_validation:
+  fold_assignments: data/folds/grouped_five_fold.csv
+  split_seed: 42
+  folds: 5
+
+training:
+  network_seeds: [42, 11, 17, 23, 37, 53, 71, 97, 131, 173]
+  batch_size: 16
+  nominal_passes: 60
+  learning_rate: 0.001
+  l2_regularization: 0.0001
+  gradient_clip_norm: 1.0
+  dropout: 0.2
+  deterministic_algorithms: true
+
+models:
+  representations: [admittance, spectral_level_shape]
+  ensemble_weights:
+    admittance: 0.5
+    spectral_level_shape: 0.5
+

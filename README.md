@@ -136,7 +136,38 @@ The publication figure specification is provided in [`docs/FIGURE_PLAN.md`](docs
 
 The public workflow will reproduce the frozen analyses without performing model, seed, augmentation, frequency, or ensemble-weight selection. Configuration files record the specimen folds, model settings, network seeds, training budgets, and evaluation definitions.
 
-Raw measurement release, processed-data access, and environment setup will be documented before the first public release. No private data, internal checkpoints, or development-only artifacts should be committed to this repository.
+## Public data and quick start
+
+The original MATLAB measurement files are included under `data/raw/` and released under CC BY 4.0. Each specimen contains impedance magnitude and phase arrays with dimensions `[201 frequencies, 20 technical repeats, 6 concentration stages]`.
+
+Create the deterministic processed dataset:
+
+```powershell
+python scripts/build_dataset.py
+```
+
+Run the public data, representation, and model-contract tests from the repository root:
+
+```powershell
+$env:PYTHONPATH = "$PWD\src"
+python -m pytest tests/test_public_data_and_models.py -q
+```
+
+The generated processed dataset is written to `data/processed/` and is excluded from version control because it can be rebuilt from the public raw files.
+
+## Repository structure
+
+```text
+configs/                  Frozen public experiment configuration
+data/raw/                 Original public MATLAB EIS measurements
+data/folds/               Frozen specimen-grouped fold assignments
+docs/                     Results summary and figure specifications
+scripts/                  Reproducible command-line workflows
+src/frequency_eis/        Data, representation, and CNN implementation
+tests/                    Public integrity and model-contract tests
+```
+
+No private data, internal checkpoints, or development-only artifacts should be committed to this repository.
 
 ## Repository status
 

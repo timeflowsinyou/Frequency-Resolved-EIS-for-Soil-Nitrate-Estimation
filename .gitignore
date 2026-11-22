@@ -18,16 +18,15 @@ env/
 .DS_Store
 Thumbs.db
 
-# Private or large research artifacts
-data/raw/
+# Private or generated research artifacts
 data/private/
+data/processed/
 checkpoints/
 results/**/checkpoints/
 results/**/training_logs/
 *.pt
 *.pth
 *.ckpt
-*.mat
 *.npz
 
 # Temporary outputs
