@@ -31,3 +31,19 @@ def fit_level_shape_representation(features,training_indices):
     diagnostics={"max_log_magnitude_reconstruction_error":float(np.max(np.abs(shape+level[:,None]-log_magnitude))),"max_centered_shape_mean":float(np.max(np.abs(shape.mean(axis=1)))),"all_finite":bool(np.all(np.isfinite(spectral)) and np.all(np.isfinite(physical)))}
     return RepresentationData("spectral_level_shape",spectral,physical,{"shape_mean":mean,"shape_sd":sd,"physical":parameters},diagnostics)
 
+def fit_direct_representation(features,training_indices,late_fusion):
+    """Normalize the original five quantities using real training observations only."""
+    normalized=np.empty_like(features,dtype=np.float64); parameters=[]
+    for channel in range(5):
+        mean,sd=_mean_sd(features[training_indices,channel].reshape(-1)); normalized[:,channel]=(features[:,channel]-mean)/sd; parameters.append({"mean":mean,"sd":sd})
+    if late_fusion:
+        spectral=normalized[:,:3]
+        physical=np.stack([normalized[:,3,0],normalized[:,4,0]],axis=1)
+        name="direct_eis_physical_fusion"
+    else:
+        spectral=normalized
+        physical=np.empty((len(features),0),dtype=np.float64)
+        name="direct_five_channel"
+    diagnostics={"all_finite":bool(np.all(np.isfinite(spectral)) and np.all(np.isfinite(physical))),"physical_frequency_constancy":bool(np.all(features[:,3:5]==features[:,3:5,:1]))}
+    return RepresentationData(name,spectral,physical,{"channels":parameters,"late_fusion":bool(late_fusion)},diagnostics)
+

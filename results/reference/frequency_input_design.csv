@@ -1,0 +1,7 @@
+representation,input_design,frequency_points,coefficient_of_determination,rmse_mg_l,evaluation_note
+Admittance,Complete measured spectrum,201,0.7953053911154309,1.8739085648429084,Controlled frequency-input diagnostic
+Admittance,Complete-range reduced grid,98,0.82112962324236,1.751718855480381,Controlled frequency-input diagnostic
+Admittance,Contiguous low-frequency range,98,0.8502789374231314,1.6026424583239598,Controlled frequency-input diagnostic
+Spectral level/shape,Complete measured spectrum,201,0.8563961785960841,1.5695609761233897,Controlled frequency-input diagnostic
+Spectral level/shape,Complete-range reduced grid,98,0.8479020583811885,1.6153136468702647,Controlled frequency-input diagnostic
+Spectral level/shape,Contiguous low-frequency range,98,0.46813533550040487,3.020617699799573,Controlled frequency-input diagnostic

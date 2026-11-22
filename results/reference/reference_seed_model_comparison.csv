@@ -1,0 +1,8 @@
+training_method,representation,model_description,coefficient_of_determination,rmse_mg_l,mae_mg_l,bias_mg_l
+Measured observations,Direct five-channel,Direct five-channel CNN,0.8513783993350221,1.5973432351516292,1.2826297961881286,0.2729608868454632
+Measured observations,Direct EIS/physical fusion,Direct EIS–physical fusion CNN,0.8588139984226892,1.5568726852679236,1.308818075570098,0.2797457689935701
+Measured observations,Admittance,Admittance-based CNN,0.8730676591548104,1.4761939607822328,1.1480821767926217,0.17010977371742853
+Matched replay,Admittance,Admittance-based CNN with matched replay,0.8539906721835695,1.5832430141806422,1.2064721894847719,-0.05879964743267022
+Physics-guided augmentation,Admittance,Admittance-based CNN with physics-guided augmentation,0.8345406872844068,1.6853996044301216,1.2742675703437707,0.007860240225206414
+Measured observations,Spectral level/shape,Spectral level/shape CNN,0.891099083716241,1.3673290681231136,1.059820147073269,-0.06998642116785046
+Measured observations,Fixed equal-weight ensemble,Fixed representation ensemble,0.8983338444982957,1.3211297737027028,1.037154614329338,0.05006167627478902

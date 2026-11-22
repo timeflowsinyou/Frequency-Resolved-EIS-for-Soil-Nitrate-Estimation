@@ -10,6 +10,7 @@ This repository presents a frozen research workflow based on the complete 201-po
 - Across ten predefined network seeds, the ensemble achieved a mean coefficient of determination of **0.8704 ± 0.0208** and a mean RMSE of **1.4874 ± 0.1183 mg/L**.
 - Historical transfer to three held-out Z-series soils produced a ten-seed mean coefficient of determination of **0.9225 ± 0.0302** and a mean RMSE of **1.1666 ± 0.2181 mg/L** for the fixed ensemble.
 - Combining admittance-based and spectral level/shape representations improved the primary grouped-CV performance relative to the individual CNN models.
+- Direct five-channel convolution achieved a coefficient of determination of **0.8514** and an RMSE of **1.5973 mg/L**. Routing the same EIS and physical quantities through separate branches improved RMSE modestly to **1.5569 mg/L**, while the physically structured representations performed better.
 - The evaluated physics-guided augmentation procedure generated physically feasible spectra but did not improve the primary grouped-CV prediction accuracy.
 - Soil-specific errors and systematic endpoint bias remained important limitations: the lowest concentration was generally overestimated and the highest concentration was generally underestimated.
 
@@ -27,7 +28,9 @@ Each observation contains impedance magnitude and phase measured at 201 original
 
 Controlled frequency-reduction experiments showed that information loss was representation-dependent. Retaining only a contiguous low-frequency subset removed high-frequency phase and shape information that was important for the spectral level/shape model. The frozen prediction workflow therefore preserves all 201 measured frequencies and does not apply smoothing or spectral interpolation.
 
-<!-- Figure 1 will be inserted here: Frequency-resolved impedance information and CNN input design. -->
+![Frequency-resolved impedance information and input-range effects](figures/figure_1_frequency_information.png)
+
+**Figure 1. Frequency-resolved impedance information.** Full-spectrum magnitude and phase responses illustrate how concentration-dependent information is distributed across the measured frequency range. The controlled input-range comparison shows that complete-range sampling is especially important for the spectral level/shape representation.
 
 ## 2. Feature Representation and Model Selection
 
@@ -47,15 +50,29 @@ The two CNNs are combined using a predefined equal-weight arithmetic mean of the
 
 | Training and representation | Coefficient of determination | RMSE (mg/L) |
 |---|---:|---:|
+| Direct five-channel CNN, measured data only | 0.8514 | 1.5973 |
+| Direct EIS–physical fusion CNN, measured data only | 0.8588 | 1.5569 |
 | Admittance-based CNN, measured data only | 0.8731 | 1.4762 |
 | Admittance-based CNN, matched replay | 0.8540 | 1.5832 |
 | Admittance-based CNN, physics-guided augmentation | 0.8345 | 1.6854 |
 | Spectral level/shape CNN, measured data only | 0.8911 | 1.3673 |
 | **Fixed equal-weight representation ensemble** | **0.8983** | **1.3211** |
 
-<!-- Figure 2 will be inserted here: Physical representations and frozen model comparison. -->
+![EIS representations and physical-condition fusion](figures/figure_2a_representation_fusion.png)
 
-<!-- Figure 3 will be inserted here: Experimental design and model architecture. -->
+**Figure 2A. Physically motivated representations and late fusion.** The admittance model uses conductance and susceptance, whereas the level/shape model separates broadband impedance level from centered spectral shape and phase. Corrected density and water content enter through a separate scalar branch.
+
+![Reference grouped cross-validation model comparison](figures/figure_2b_model_comparison.png)
+
+**Figure 2B. Frozen reference-seed model comparison.** The fixed equal-weight representation ensemble achieved the lowest RMSE. Physics-guided augmentation did not improve performance over measured-data training.
+
+![Specimen-grouped five-fold evaluation](figures/figure_3a_grouped_evaluation.png)
+
+**Figure 3A. Specimen-grouped evaluation design.** All concentration stages and technical repeats from each soil remain together, producing complete and unique out-of-fold predictions without validation-soil leakage.
+
+![Shared late-fusion CNN architecture](figures/figure_3b_cnn_architecture.png)
+
+**Figure 3B. Shared CNN and late-fusion architecture.** Representation-specific EIS channels are processed by the same convolutional structure, then combined with a separate physical-condition embedding. The two independently trained models are combined using a fixed arithmetic mean.
 
 ## 3. Physics-Guided Data Augmentation
 
@@ -81,7 +98,9 @@ The primary population contained 19 soil specimens. Two specimens were excluded 
 
 The fixed ensemble outperformed the admittance-based CNN in all ten network seeds and ranked first among the predefined candidates in eight of ten seeds.
 
-<!-- Figure 4 will be inserted here: Multi-seed stability. -->
+![Multi-seed stability](figures/figure_4_multiseed_stability.png)
+
+**Figure 4. Multi-seed stability.** Bars report mean RMSE across ten predefined network seeds; error bars show the sample standard deviation. The fixed ensemble was more accurate and less variable than either individual representation in the primary grouped evaluation.
 
 ### Historical cross-cohort transfer
 
@@ -95,7 +114,9 @@ Models fitted using all 19 eligible original soils were evaluated on three histo
 
 The transfer results are promising but must be interpreted as historical cross-cohort transfer, not pristine prospective external validation. The Z-series soils were examined in earlier development analyses and were prepared using a different experimental protocol.
 
-<!-- Figure 5 will be inserted here: Transfer prediction, predicted versus nominal concentration. -->
+![Historical transfer predictions](figures/figure_5_transfer_predictions.png)
+
+**Figure 5. Historical transfer predictions.** Technical-measurement predictions and stage summaries are shown for the three Z-series soils. Shared axes expose both the strong overall concentration tracking and the soil-specific negative bias for Z15_04.
 
 ## 5. Error Sources and Experimental Limitations
 
@@ -103,7 +124,9 @@ The transfer results are promising but must be interpreted as historical cross-c
 
 Across network seeds, the lowest concentration stage was generally overestimated and the highest concentration stage was generally underestimated. This stable pattern indicates prediction-range contraction rather than an isolated unfavorable initialization.
 
-<!-- Figure 6 will be inserted here: Concentration-stage error and endpoint bias. -->
+![Concentration-stage error and endpoint bias](figures/figure_6_stage_error.png)
+
+**Figure 6. Concentration-stage error and endpoint bias.** Across network seeds, predictions exhibit range contraction: the lowest stage is overestimated and the highest stage is underestimated. Error bars represent between-seed sample standard deviation.
 
 ### Soil-specific errors
 
@@ -155,6 +178,37 @@ python -m pytest tests/test_public_data_and_models.py -q
 
 The generated processed dataset is written to `data/processed/` and is excluded from version control because it can be rebuilt from the public raw files.
 
+Reproduce the reference-seed grouped cross-validation and historical transfer evaluations:
+
+```powershell
+python scripts/run_reference_evaluation.py --scope both --seeds 42 --device auto --output-dir results/reproduced/reference_seed
+```
+
+Use `--resume` to continue from compatible atomic checkpoints after an interrupted run. The script writes observation-level predictions, machine-readable metrics, and a run audit to the selected output directory. It does not search over seeds, representations, folds, or ensemble weights.
+
+Run the fixed seed-42 control comparing direct five-channel convolution with a separate physical-condition branch:
+
+```powershell
+python scripts/run_direct_input_comparison.py --device auto
+```
+
+This control uses the same 19-soil folds, measured observations, optimizer, and training budget as the reference evaluation. It does not tune the architecture or add network seeds.
+
+Generate all publication figures from the public measurements and fixed numerical result tables:
+
+```powershell
+python scripts/make_figure_1_frequency_information.py
+python scripts/make_figure_2a_representation_fusion.py
+python scripts/make_figure_2b_model_comparison.py
+python scripts/make_figure_3a_grouped_evaluation.py
+python scripts/make_figure_3b_cnn_architecture.py
+python scripts/make_figure_4_multiseed_stability.py
+python scripts/make_figure_5_transfer_predictions.py
+python scripts/make_figure_6_stage_error.py
+```
+
+Figure 1 uses the complete measured frequency grid in its spectral panel. Its controlled input-range comparison is a representation-specific diagnostic and is not used to select the reported 19-soil model after evaluation. Figure 2 reports the predefined reference-seed comparison, including the unfavorable augmentation result. Figures 4–6 use the frozen ten-seed result tables and do not perform model or seed selection.
+
 ## Repository structure
 
 ```text
@@ -165,6 +219,9 @@ docs/                     Results summary and figure specifications
 scripts/                  Reproducible command-line workflows
 src/frequency_eis/        Data, representation, and CNN implementation
 tests/                    Public integrity and model-contract tests
+results/reference/        Fixed numerical evidence tables for published results
+results/reproduced/       Locally reproduced outputs (not version controlled)
+figures/                  Reproducibly generated publication figures
 ```
 
 No private data, internal checkpoints, or development-only artifacts should be committed to this repository.

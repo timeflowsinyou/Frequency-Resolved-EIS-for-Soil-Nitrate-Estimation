@@ -1,0 +1,61 @@
+evaluation_population,network_seed,model_name,rmse_mg_l,coefficient_of_determination
+19-soil grouped cross-validation,11,Admittance CNN,1.7294244009469855,0.8257837724943143
+19-soil grouped cross-validation,11,Spectral level/shape CNN,1.55788886843844,0.8586296318237354
+19-soil grouped cross-validation,11,Fixed equal-weight ensemble,1.5282908077407247,0.8639503456868527
+19-soil grouped cross-validation,17,Admittance CNN,1.8248135869189157,0.8060354101230521
+19-soil grouped cross-validation,17,Spectral level/shape CNN,1.361114983569713,0.8920866759174695
+19-soil grouped cross-validation,17,Fixed equal-weight ensemble,1.4407913216693513,0.8790829317984763
+19-soil grouped cross-validation,23,Admittance CNN,1.6498537426315012,0.8414463174759953
+19-soil grouped cross-validation,23,Spectral level/shape CNN,1.7107466135515916,0.8295265231979776
+19-soil grouped cross-validation,23,Fixed equal-weight ensemble,1.5532131675216814,0.8594769497981309
+19-soil grouped cross-validation,37,Admittance CNN,1.6015217331108527,0.8505998223835609
+19-soil grouped cross-validation,37,Spectral level/shape CNN,1.527518071665398,0.8640878900564162
+19-soil grouped cross-validation,37,Fixed equal-weight ensemble,1.443801596571844,0.8785771349354903
+19-soil grouped cross-validation,42,Admittance CNN,1.4761939607822325,0.8730676591548105
+19-soil grouped cross-validation,42,Spectral level/shape CNN,1.3673290681231136,0.891099083716241
+19-soil grouped cross-validation,42,Fixed equal-weight ensemble,1.3211297737027028,0.8983338444982957
+19-soil grouped cross-validation,53,Admittance CNN,1.6157755341073377,0.8479286167503327
+19-soil grouped cross-validation,53,Spectral level/shape CNN,1.4252022470514305,0.8816853733716706
+19-soil grouped cross-validation,53,Fixed equal-weight ensemble,1.3855491318544975,0.8881774731327143
+19-soil grouped cross-validation,71,Admittance CNN,1.5949054445665063,0.8518316918545682
+19-soil grouped cross-validation,71,Spectral level/shape CNN,1.470602722655348,0.8740273770703095
+19-soil grouped cross-validation,71,Fixed equal-weight ensemble,1.3774506592506515,0.8894808482035752
+19-soil grouped cross-validation,97,Admittance CNN,1.670360037415249,0.8374804455532907
+19-soil grouped cross-validation,97,Spectral level/shape CNN,1.7886157720884723,0.8136542239913829
+19-soil grouped cross-validation,97,Fixed equal-weight ensemble,1.6442425067437738,0.8425229816234454
+19-soil grouped cross-validation,131,Admittance CNN,1.8450034112932727,0.8017195993992015
+19-soil grouped cross-validation,131,Spectral level/shape CNN,1.932869145085312,0.7823842384304133
+19-soil grouped cross-validation,131,Fixed equal-weight ensemble,1.6901626071279319,0.8336041773587024
+19-soil grouped cross-validation,173,Admittance CNN,1.7438316386048296,0.8228690114234356
+19-soil grouped cross-validation,173,Spectral level/shape CNN,1.4133811365614444,0.8836399170204902
+19-soil grouped cross-validation,173,Fixed equal-weight ensemble,1.4892376696418514,0.8708145903582137
+Historical three-soil transfer,11,Admittance CNN,1.200501118783066,0.9204107182114666
+Historical three-soil transfer,11,Spectral level/shape CNN,1.5417300599617756,0.8687358508749266
+Historical three-soil transfer,11,Fixed equal-weight ensemble,1.2075847532565773,0.9194687037716702
+Historical three-soil transfer,17,Admittance CNN,1.3025156985163993,0.906309538101831
+Historical three-soil transfer,17,Spectral level/shape CNN,1.2726892513983312,0.9105512656503211
+Historical three-soil transfer,17,Fixed equal-weight ensemble,1.2007435125605725,0.920378575143904
+Historical three-soil transfer,23,Admittance CNN,1.0402056124935144,0.9402458830400653
+Historical three-soil transfer,23,Spectral level/shape CNN,1.6276893490648672,0.8536905119427424
+Historical three-soil transfer,23,Fixed equal-weight ensemble,1.0047042770292143,0.9442549961845892
+Historical three-soil transfer,37,Admittance CNN,1.2270578158571293,0.9168505272823038
+Historical three-soil transfer,37,Spectral level/shape CNN,1.077653422565031,0.9358660967185495
+Historical three-soil transfer,37,Fixed equal-weight ensemble,1.0733979833778724,0.9363716007520786
+Historical three-soil transfer,42,Admittance CNN,0.9335790917676664,0.9518682468196754
+Historical three-soil transfer,42,Spectral level/shape CNN,1.1053701946214236,0.9325246808421997
+Historical three-soil transfer,42,Fixed equal-weight ensemble,0.9603429957738115,0.9490690011187082
+Historical three-soil transfer,53,Admittance CNN,1.2006127440482584,0.9203959167463412
+Historical three-soil transfer,53,Spectral level/shape CNN,2.053480297021884,0.7671316168564719
+Historical three-soil transfer,53,Fixed equal-weight ensemble,1.555306865784142,0.866413790873764
+Historical three-soil transfer,71,Admittance CNN,0.8805406227041367,0.957181816377928
+Historical three-soil transfer,71,Spectral level/shape CNN,1.6734598842302317,0.845346390900163
+Historical three-soil transfer,71,Fixed equal-weight ensemble,1.2032008404486791,0.9200523503486802
+Historical three-soil transfer,97,Admittance CNN,0.9900684462263288,0.9458672753749622
+Historical three-soil transfer,97,Spectral level/shape CNN,1.0758992221658712,0.936074720659802
+Historical three-soil transfer,97,Fixed equal-weight ensemble,0.9528752682237251,0.9498580109785942
+Historical three-soil transfer,131,Admittance CNN,1.1249122922032242,0.9301177672519756
+Historical three-soil transfer,131,Spectral level/shape CNN,1.0243448116928198,0.9420542228891199
+Historical three-soil transfer,131,Fixed equal-weight ensemble,0.9948385895298417,0.9453443965617835
+Historical three-soil transfer,173,Admittance CNN,1.2461213554185988,0.9142468415232092
+Historical three-soil transfer,173,Spectral level/shape CNN,1.8697741499058427,0.8069331326393036
+Historical three-soil transfer,173,Fixed equal-weight ensemble,1.5133306540514169,0.8735272080628627

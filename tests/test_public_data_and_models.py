@@ -2,8 +2,9 @@ from pathlib import Path
 import numpy as np
 import torch
 from frequency_eis.data import build_measured_dataset
-from frequency_eis.model import SpectralPhysicalFusionCNN,count_trainable_parameters
-from frequency_eis.representations import fit_admittance_representation,fit_level_shape_representation
+from frequency_eis.model import DirectFiveChannelCNN,SpectralPhysicalFusionCNN,count_trainable_parameters
+from frequency_eis.representations import fit_admittance_representation,fit_direct_representation,fit_level_shape_representation
+from frequency_eis.training import continuous_minibatch_stream
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -28,4 +29,18 @@ def test_frozen_model_shapes_and_parameter_counts():
     assert count_trainable_parameters(level_shape)==111785
     assert admittance(torch.zeros(4,2,201),torch.zeros(4,2)).shape==(4,)
     assert level_shape(torch.zeros(4,3,201),torch.zeros(4,3)).shape==(4,)
+
+def test_direct_input_control_models():
+    data,_=build_measured_dataset(ROOT/"data/raw"); training=np.arange(1200); direct=fit_direct_representation(data.features,training,False); fusion=fit_direct_representation(data.features,training,True)
+    assert direct.spectral.shape==(2880,5,201) and direct.physical.shape==(2880,0)
+    assert fusion.spectral.shape==(2880,3,201) and fusion.physical.shape==(2880,2)
+    full=DirectFiveChannelCNN(); late=SpectralPhysicalFusionCNN(3,2)
+    assert count_trainable_parameters(full)==111905 and count_trainable_parameters(late)==111777
+    assert full(torch.zeros(4,5,201)).shape==(4,) and late(torch.zeros(4,3,201),torch.zeros(4,2)).shape==(4,)
+
+def test_frozen_grouped_fold_counts_and_training_budgets():
+    import pandas as pd
+    data,_=build_measured_dataset(ROOT/"data/raw"); folds=pd.read_csv(ROOT/"data/folds/grouped_five_fold.csv"); expected_training=[1680,1800,1800,2040,1800]; expected_validation=[600,480,480,240,480]; expected_updates=[6300,6750,6750,7650,6750]
+    for fold in range(1,6):
+        assignment=folds[folds.fold==fold]; train=np.flatnonzero(data.metadata.specimen_id.isin(assignment[assignment.role=="training"].specimen_id)); validation=np.flatnonzero(data.metadata.specimen_id.isin(assignment[assignment.role=="validation"].specimen_id)); assert len(train)==expected_training[fold-1] and len(validation)==expected_validation[fold-1]; assert not set(data.metadata.iloc[train].specimen_id)&set(data.metadata.iloc[validation].specimen_id); assert len(continuous_minibatch_stream(len(train),60,42,fold))//16==expected_updates[fold-1]
 

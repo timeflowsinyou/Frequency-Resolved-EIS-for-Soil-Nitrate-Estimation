@@ -24,6 +24,7 @@ data/processed/
 checkpoints/
 results/**/checkpoints/
 results/**/training_logs/
+results/reproduced/
 *.pt
 *.pth
 *.ckpt

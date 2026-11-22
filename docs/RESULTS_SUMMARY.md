@@ -1,4 +1,4 @@
-# Frozen Results Summary
+# Reference Results Summary
 
 ## Primary grouped five-fold evaluation
 
@@ -6,9 +6,13 @@ Population: 19 soil specimens, six nitrate stages per specimen, 20 technical EIS
 
 | Model | Coefficient of determination | RMSE (mg/L) | MAE (mg/L) |
 |---|---:|---:|---:|
+| Direct five-channel CNN | 0.851378 | 1.597343 | 1.282630 |
+| Direct EIS–physical fusion CNN | 0.858814 | 1.556873 | 1.308818 |
 | Admittance-based CNN | 0.873068 | 1.476194 | 1.148082 |
 | Spectral level/shape CNN | 0.891099 | 1.367329 | 1.059820 |
 | Fixed equal-weight ensemble | 0.898334 | 1.321130 | 1.037155 |
+
+Separating density and water content from the frequency axis reduced RMSE by 0.0405 mg/L relative to direct five-channel convolution. The larger gains came from the physically structured admittance and spectral level/shape representations. The fixed representation ensemble reduced RMSE by 0.2762 mg/L relative to the direct five-channel model.
 
 ## Ten-network-seed grouped-CV stability
 

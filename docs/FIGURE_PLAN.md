@@ -40,6 +40,8 @@ Scientific message:
 
 Figure 2 is limited to two panels. No separate model-complementarity scatter panel is required.
 
+The two panels are generated as separate image files so that their dimensions and placement can be controlled independently in the repository and manuscript layout.
+
 ### Panel A — Physical representation schematic
 
 Show the two retained representations:
@@ -53,6 +55,8 @@ Corrected density and water content should be shown as a separate physical-condi
 
 Compare:
 
+- direct five-channel CNN;
+- direct EIS–physical fusion CNN;
 - measured-data admittance CNN;
 - matched replay control;
 - physics-guided augmentation;
@@ -63,6 +67,8 @@ Report both coefficient of determination and RMSE. Highlight the ensemble result
 
 ## Figure 3 — Experimental Design and Model Architecture
 
+The evaluation design and model architecture are generated as separate image files so that each workflow can be read at publication scale.
+
 Show:
 
 - 19 soil specimens;
@@ -71,7 +77,7 @@ Show:
 - training-only preprocessing;
 - 201-frequency EIS branches;
 - separate corrected-density and corrected-water-content branch;
-- two frozen CNN representations;
+- two fixed CNN representations;
 - fixed equal-weight prediction ensemble;
 - exclusively measured validation observations.
 
@@ -82,7 +88,7 @@ Use two panels:
 - Panel A: 19-soil grouped-CV RMSE across ten network seeds;
 - Panel B: historical Z-transfer RMSE across the same seeds.
 
-Show every seed as an individual point. Connect models trained with the same seed where legibility permits. Overlay the mean and sample standard deviation and identify the reference seed without visually privileging it as the selected best seed.
+Show the mean RMSE and sample standard deviation across the ten network seeds. Use a zero-based vertical axis with enough headroom that the error bars remain visible without dominating the panel. Report each value directly as mean ± sample SD.
 
 ## Figure 5 — Transfer Prediction: Predicted vs. Nominal
 
@@ -97,7 +103,7 @@ Show:
 - seed-level or across-seed summary predictions;
 - specimen-level RMSE and signed bias.
 
-The caption must state that the specimens are historically held out for the frozen full-cohort fit but are not a pristine prospective external cohort.
+The caption must state that the specimens are historically held out for the fixed full-cohort fit but are not a pristine prospective external cohort.
 
 ## Figure 6 — Concentration-Stage Error and Endpoint Bias
 
