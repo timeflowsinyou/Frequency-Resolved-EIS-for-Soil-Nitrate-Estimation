@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments and local settings
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# IDE and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Private or large research artifacts
+data/raw/
+data/private/
+checkpoints/
+results/**/checkpoints/
+results/**/training_logs/
+*.pt
+*.pth
+*.ckpt
+*.mat
+*.npz
+
+# Temporary outputs
+tmp/
+temp/
+*.tmp
+*.log
+
